@@ -41,7 +41,9 @@ def redirectPage():
     code = request.args.get('code')  # returns the token
     token_info = sp_oauth.get_access_token(code)
     session[TOKEN_CODE] = token_info    
-    return f"<p>{token_info}</p>"
+    return redirect(url_for("display", _external=True))
+
+#f"<p>{token_info}</p>"
 
 def get_token(): 
     token_info = session.get(TOKEN_CODE, None)
