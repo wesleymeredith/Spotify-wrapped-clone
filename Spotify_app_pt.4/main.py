@@ -38,4 +38,4 @@ def redirectPage():
     sp_oauth = create_spotify_oauth()
     code = request.args.get('code')  # returns the token
     token_info = sp_oauth.get_access_token(code)
-    return f"<p>{token_info}</p>"
+    return #f"<p>{token_info}</p>"
