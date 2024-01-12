@@ -36,3 +36,21 @@ This project aims to provide a user-friendly interface for displaying Spotify Wr
    ```bash
    git clone https://github.com/your-username/spotify-wrapped-clone.git
    cd spotify-wrapped-clone
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Set-up your Spotify developer crendentials:
+   - Create a Spotify Developer account here.
+Create a new app to obtain your CLIENT_ID and CLIENT_SECRET.
+Set the redirect URI to http://127.0.0.1:5000/redirectPage.
+Create a .env file and add your credentials
+4. Run the application
+```bash
+flask --app main run
+```
+Visit the local host IP in the browser.
+
+### Contributing
+Contributions are welcome! If you have ideas for improvements, open an issue or create a pull request.
