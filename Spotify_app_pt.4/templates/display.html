@@ -1,0 +1,19 @@
+<!-- display.html -->
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <center>
+            <h1>Spotify 'Wrapped' Clone</h1>
+            <h2>Top Track Generator</h2>
+            <h3>Top Artists:</h3>
+            <ol class="centered-list">
+                {% for artist in user_top_artists %}
+                    <li>{{ artist }}</li>
+                {% endfor %}
+            </ol>
+        </center>
+    </body>
+</html>

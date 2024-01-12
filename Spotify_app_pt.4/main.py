@@ -1,7 +1,7 @@
 # Wesley Meredith 1-9-2024
 # purpose: create a webpage in flask that displays 'Spotify Wrapped' top artists and tracks.
 
-from flask import Flask, request, redirect, url_for, session
+from flask import Flask, request, redirect, url_for, session, render_template
 
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -25,8 +25,9 @@ app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 
 @app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+def index():
+    name ='username'
+    return render_template('index.html', title='Welcome', username=name)
 
 @app.route("/login")
 def login():
@@ -67,21 +68,11 @@ def display():
     user_top_songs = sp.current_user_top_tracks(
         limit=10,
         offset=0,
-        time_range="medium_term"
+        time_range="long_term"
     )
 
-    return str(user_top_songs['items'])
+    user_top_artists = [track['artists'][0]['name'] for track in user_top_songs['items']]
+
+    return render_template('display.html', title='Welcome', user_top_artists=user_top_artists)
 
 
-# @app.route("/display")
-# def display():
-#     user_token=get_token()
-#     sp = spotipy.Spotify(
-#         auth=user_token['access_token']
-#     )
-#     user_top_songs = sp.current_user_top_tracks(
-#         limit=10,
-#         offset=0,
-#         time_range="medium_term"
-#     )
-#     return str(user_top_songs['items'])

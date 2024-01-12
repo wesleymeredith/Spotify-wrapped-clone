@@ -1,0 +1,21 @@
+/* style.css */
+ol.centered-list {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+ol.centered-list li {
+    counter-increment: my-counter; /* Increment the counter for each list item */
+    text-align: center; /* Align text to the left */
+}
+
+ol.centered-list li::before {
+    content: counter(my-counter) ". "; /* Add dots after the counter number */
+    font-size: 24px; /* Adjust the font size of the counter and dots */
+    margin-right: 4px; /* Add some spacing between the counter and the text */
+}
+
+ol.centered-list li {
+    font-size: 24px; /* Adjust the font size for the artist names */
+}
