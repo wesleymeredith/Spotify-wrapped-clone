@@ -65,14 +65,15 @@ def display():
 
     sp = spotipy.Spotify(auth=access_token)
     
-    user_top_songs = sp.current_user_top_tracks(
+    user_top_artists = sp.current_user_top_artists(
         limit=10,
         offset=0,
-        time_range="long_term"
+        time_range="medium_term"
     )
 
-    user_top_artists = [track['artists'][0]['name'] for track in user_top_songs['items']]
-
+    #user_top_artists = [track['artists'][0]['name'] for track in user_top_artists['items']]
+    user_top_artists = [artist['name'] for artist in user_top_artists['items']]
+    
     return render_template('display.html', title='Welcome', user_top_artists=user_top_artists)
 
 
