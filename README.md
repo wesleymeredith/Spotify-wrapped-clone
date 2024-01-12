@@ -42,7 +42,7 @@ This project aims to provide a user-friendly interface for displaying Spotify Wr
    pip install -r requirements.txt
    ```
 3. Set-up your Spotify developer crendentials:
-   - Create a Spotify Developer account here.
+   - Create a Spotify Developer account [here](https://developer.spotify.com/).
 Create a new app to obtain your CLIENT_ID and CLIENT_SECRET.
 Set the redirect URI to http://127.0.0.1:5000/redirectPage.
 Create a .env file and add your credentials
