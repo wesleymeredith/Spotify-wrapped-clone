@@ -1,0 +1,83 @@
+<!-- display.html -->
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <center>
+        <h1 style="font-family: Gotham"> Spotify 'Wrapped' Clone</h1>
+        <h2 style="font-family: Gotham">Top Artist Generator</h2>
+
+        <div class="button-container">
+            <button class="time-frame-button" data-frame="short">Last 4 weeks</button>
+            <button class="time-frame-button" data-frame="medium">Last 6 Months</button>
+            <button class="time-frame-button" data-frame="long">Last 1 Year</button>
+        </div>
+
+        <div class="content-container">
+            <div class="time-frame-content" data-frame="short">
+                <h3 style="font-family: Gotham">Last 4 weeks</h3>
+                <ol style="font-family: Gotham" class="centered-list">
+                    {% for artist in user_top_artists %}
+                    <li>{{ artist }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+            <div class="time-frame-content" data-frame="medium" style="display: none;">
+                <h3 style="font-family: Gotham">Last 6 Months</h3>
+                <ol style="font-family: Gotham" class="centered-list">
+                    {% for artist in user_top_artists_MEDIUM %}
+                    <li>{{ artist }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+            <div class="time-frame-content" data-frame="long" style="display: none;">
+                <h3 style="font-family: Gotham">Last 1 Year</h3>
+                <ol style="font-family: Gotham" class="centered-list">
+                    {% for artist in user_top_artists_LONG %}
+                    <li>{{ artist }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Button to get recommendations -->
+        <form action="{{ url_for('display') }}" method="post">
+            <input type="hidden" name="time_range" value="{{ current_time_frame }}">
+            <input type="submit" value="Get Recommendations for {{ current_time_frame_label }}">
+        </form>
+
+    </center>
+
+    <script>
+        const timeFrameButtons = document.querySelectorAll('.time-frame-button');
+        const timeFrameContents = document.querySelectorAll('.time-frame-content');
+        let current_time_frame = 'short_term'; // Default to short_term
+        let current_time_frame_label = 'Last 4 weeks'; // Default label
+
+
+        timeFrameButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const dataFrame = button.dataset.frame;
+                current_time_frame = dataFrame;
+                if (dataFrame === 'short') {
+                    current_time_frame_label = 'Last 4 weeks';
+                } else if (dataFrame === 'medium') {
+                    current_time_frame_label = 'Last 6 months';
+                } else if (dataFrame === 'long') {
+                    current_time_frame_label = 'Last 1 year';
+                }
+                timeFrameContents.forEach(content => {
+                 if (content.dataset.frame === dataFrame) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
+                });
+            });
+        });
+    </script>
+</body>

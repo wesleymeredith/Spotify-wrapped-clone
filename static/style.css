@@ -1,0 +1,109 @@
+/* style.css */
+
+@font-face {
+    font-family: 'Gotham';
+    src: url("C:/Users/Wesley/Desktop/Gotham_font_family/Gotham/Gotham_Medium.otf") format('opentype');
+}
+
+.login-big-btn {
+    color: #fff;
+    background-color: #7c25f8;
+    font-family: 'Gotham', sans-serif; /* Use Gotham font */
+    font-size: 14px;
+    line-height: 1;
+    border-radius: 500px;
+    padding: 18px 48px 16px;
+    transition-property: background-color;
+    transition-duration: .3s;
+    border-width: 0;
+    letter-spacing: 2px;
+    min-width: 160px;
+    text-transform: uppercase;
+    white-space: normal;
+    cursor: pointer;
+}
+
+.login-big-btn:hover {
+    background-color: #07e35f;
+}
+
+
+ol.centered-list {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+ol.centered-list li {
+    counter-increment: my-counter; /* Increment the counter for each list item */
+    text-align: center; /* Align text to the left */
+}
+
+ol.centered-list li::before {
+    content: counter(my-counter) ". "; /* Add dots after the counter number */
+    font-size: 24px; /* Adjust the font size of the counter and dots */
+    margin-right: 4px; /* Add some spacing between the counter and the text */
+}
+
+ol.centered-list li {
+    font-size: 24px; /* Adjust the font size for the artist names */
+}
+
+
+/* CSS */
+.time-frame-button { 
+    appearance: none;
+    background-color: #FAFBFC;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #24292E;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    padding: 6px 16px;
+    position: relative;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: break-word;
+}
+
+.time-frame-button:hover {
+    background-color: #F3F4F6;
+    text-decoration: none;
+    transition-duration: 0.1s;
+}
+
+.time-frame-button:disabled {
+    background-color: #FAFBFC;
+    border-color: rgba(27, 31, 35, 0.15);
+    color: #959DA5;
+    cursor: default;
+}
+
+.time-frame-button:active {
+    background-color: #EDEFF2;
+    box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+    transition: none 0s;
+}
+
+.time-frame-button:focus {
+    outline: 1px transparent;
+}
+
+.time-frame-button:before {
+    display: none;
+}
+
+.time-frame-button:-webkit-details-marker {
+    display: none;
+}
