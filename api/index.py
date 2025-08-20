@@ -1,8 +1,8 @@
 # Wesley Meredith 1-9-2024
 # purpose: create a webpage in flask that displays 'Spotify Wrapped' top artists and tracks.
+# Modified for Vercel deployment
 
 from flask import Flask, request, redirect, url_for, session, render_template
-
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import os
@@ -19,21 +19,24 @@ project_root = os.path.dirname(current_dir)
 app = Flask(__name__, 
            template_folder=os.path.join(project_root, 'templates'),
            static_folder=os.path.join(project_root, 'public', 'static'))
-app.secret_key = os.getenv("SECRET_KEY")
+
+app.secret_key = os.getenv("SECRET_KEY") or "your-secret-key-here"
 
 # create an object so that you can just call it every time
 def create_spotify_oauth():
+    # Use environment variable for redirect URI, fallback to production URL
+    redirect_uri = os.getenv("REDIRECT_URI", "https://spotify-wrapped-clone.vercel.app/redirectPage")
+    
     return SpotifyOAuth(
         client_id=os.getenv("CLIENT_ID"),
         client_secret=os.getenv("CLIENT_SECRET"),
-        redirect_uri="http://127.0.0.1:5000/redirectPage",
+        redirect_uri=redirect_uri,
         scope="user-top-read user-library-read"
     )
 
-
 @app.route("/")
 def index():
-    name ='username'
+    name = 'username'
     return render_template('index.html', title='Welcome', username=name)
 
 @app.route("/login")
@@ -51,13 +54,9 @@ def redirectPage():
     session[TOKEN_CODE] = token_info    
     return redirect(url_for("display", _external=True))
 
-#f"<p>{token_info}</p>"
-
 def get_token(): 
     token_info = session.get(TOKEN_CODE, None)
     return token_info
-
-
 
 @app.route("/display", methods=["GET", "POST"])
 def display():
@@ -70,7 +69,6 @@ def display():
 
     if access_token is None:
         return "Access token not found. Please log in again."
-
 
     sp = spotipy.Spotify(auth=access_token)
 
@@ -117,7 +115,6 @@ def display():
         user_top_songs_MEDIUM=user_top_songs_MEDIUM,
         user_top_songs_LONG=user_top_songs_LONG
     )
-
 
 # Function to get recommendations based on user's top artists
 def get_recommendations(sp, artists):
