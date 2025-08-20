@@ -1,21 +1,20 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-        <title>{{ title }}</title>
-    </head>
-    <body>
-        <center>
-            <h1 style="font-family: Gotham">Spotify 'Wrapped' Clone</h1>
-            <h2 style="font-family: Gotham">Top Song & Artist Generator</h2>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{{ title }}</title>
+</head>
+<body style="min-height: 100vh; display: flex; flex-direction: column; margin: 0;">
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <h1 style="font-family: Gotham; margin-bottom: 10px;">Spotify 'Wrapped' Clone</h1>
+        <h2 style="font-family: Gotham; margin-bottom: 30px;">Top Song & Artist Generator</h2>
+        <button class="login-big-btn" onclick="location.href = '/login';">Log in with spotify</button>
+    </div>
     
-            <button class="login-big-btn" onclick="location.href = '/login';" >Log in with spotify</button>
-
-        </center>
-        <footer style="font-size: 14px; color: #888; text-align: center; padding: 20px 0;">
-            <div>
-                &copy; 2025 Wesley Meredith. This is a Spotify Wrapped clone for educational and personal use.<br>
-                Your privacy is protected by Spotify's OAuth 2.0 authentication.
-            </div>
-        </footer>
-    </body>
+    <footer style="font-size: 14px; color: #888; text-align: center; padding: 20px 0; margin-top: auto;">
+        <div>
+            &copy; 2025 Wesley Meredith. This is a Spotify Wrapped clone for educational and personal use.<br>
+            Your privacy is protected by Spotify's OAuth 2.0 authentication.
+        </div>
+    </footer>
+</body>
 </html>
