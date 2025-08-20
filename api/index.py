@@ -12,6 +12,14 @@ load_dotenv()
 
 TOKEN_CODE = os.getenv("TOKEN_CODE")
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+
+# Initialize Flask app with correct paths for Vercel
+app = Flask(__name__, 
+           template_folder=os.path.join(project_root, 'templates'),
+           static_folder=os.path.join(project_root, 'public', 'static'))
+app.secret_key = os.getenv("SECRET_KEY")
 
 # create an object so that you can just call it every time
 def create_spotify_oauth():
@@ -22,8 +30,6 @@ def create_spotify_oauth():
         scope="user-top-read user-library-read"
     )
 
-app = Flask(__name__)
-app.secret_key = os.getenv("SECRET_KEY")
 
 @app.route("/")
 def index():
@@ -121,6 +127,9 @@ def get_recommendations(sp, artists):
         recommendations.extend(results['tracks'])
     return recommendations
 
-# for track in results['tracks']:
-#         logger.info('Recommendation: %s - %s', track['name'],
-#                     track['artists'][0]['name'])
+
+if __name__ == '__main__':
+    app.run()
+
+# Export the Flask app for deployment
+app = app

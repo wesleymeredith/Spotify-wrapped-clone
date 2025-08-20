@@ -7,77 +7,120 @@
 <body>
     <center>
         <h1 style="font-family: Gotham"> Spotify 'Wrapped' Clone</h1>
-        <h2 style="font-family: Gotham">Top Artist Generator</h2>
 
-        <div class="button-container">
-            <button class="time-frame-button" data-frame="short">Last 4 weeks</button>
-            <button class="time-frame-button" data-frame="medium">Last 6 Months</button>
-            <button class="time-frame-button" data-frame="long">Last 1 Year</button>
+        <div class="toggle-container" style="margin-bottom: 32px; display: flex; justify-content: center; gap: 24px;">
+            <button id="toggle-artists" class="login-big-btn toggle-btn active">Top Artists</button>
+            <button id="toggle-songs" class="login-big-btn toggle-btn">Top Songs</button>
+        </div>
+
+        <div class="button-container" style="margin-bottom: 32px; display: flex; justify-content: center; gap: 24px;">
+            <button class="login-big-btn time-frame-button" data-frame="short">Last 4 weeks</button>
+            <button class="login-big-btn time-frame-button" data-frame="medium">Last 6 Months</button>
+            <button class="login-big-btn time-frame-button" data-frame="long">Last 1 Year</button>
         </div>
 
         <div class="content-container">
-            <div class="time-frame-content" data-frame="short">
-                <h3 style="font-family: Gotham">Last 4 weeks</h3>
+            <div class="time-frame-content top-artists" data-frame="short">
+                <h3 style="font-family: Gotham">Last 4 weeks - Top Artists</h3>
                 <ol style="font-family: Gotham" class="centered-list">
                     {% for artist in user_top_artists %}
                     <li>{{ artist }}</li>
                     {% endfor %}
                 </ol>
             </div>
+            <div class="time-frame-content top-songs" data-frame="short" style="display:none;">
+                <h3 style="font-family: Gotham">Last 4 weeks - Top Songs</h3>
+                <ol style="font-family: Gotham" class="centered-list">
+                    {% for song in user_top_songs %}
+                    <li>{{ song }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
 
-            <div class="time-frame-content" data-frame="medium" style="display: none;">
-                <h3 style="font-family: Gotham">Last 6 Months</h3>
+            <div class="time-frame-content top-artists" data-frame="medium" style="display: none;">
+                <h3 style="font-family: Gotham">Last 6 Months - Top Artists</h3>
                 <ol style="font-family: Gotham" class="centered-list">
                     {% for artist in user_top_artists_MEDIUM %}
                     <li>{{ artist }}</li>
                     {% endfor %}
                 </ol>
             </div>
+            <div class="time-frame-content top-songs" data-frame="medium" style="display:none;">
+                <h3 style="font-family: Gotham">Last 6 Months - Top Songs</h3>
+                <ol style="font-family: Gotham" class="centered-list">
+                    {% for song in user_top_songs_MEDIUM %}
+                    <li>{{ song }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
 
-            <div class="time-frame-content" data-frame="long" style="display: none;">
-                <h3 style="font-family: Gotham">Last 1 Year</h3>
+            <div class="time-frame-content top-artists" data-frame="long" style="display: none;">
+                <h3 style="font-family: Gotham">Last 1 Year - Top Artists</h3>
                 <ol style="font-family: Gotham" class="centered-list">
                     {% for artist in user_top_artists_LONG %}
                     <li>{{ artist }}</li>
                     {% endfor %}
                 </ol>
             </div>
+            <div class="time-frame-content top-songs" data-frame="long" style="display:none;">
+                <h3 style="font-family: Gotham">Last 1 Year - Top Songs</h3>
+                <ol style="font-family: Gotham" class="centered-list">
+                    {% for song in user_top_songs_LONG %}
+                    <li>{{ song }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
         </div>
         
-        <!-- Button to get recommendations -->
-        <form action="{{ url_for('display') }}" method="post">
-            <input type="hidden" name="time_range" value="{{ current_time_frame }}">
-            <input type="submit" value="Get Recommendations for {{ current_time_frame_label }}">
-        </form>
+
+    
 
     </center>
 
     <script>
         const timeFrameButtons = document.querySelectorAll('.time-frame-button');
-        const timeFrameContents = document.querySelectorAll('.time-frame-content');
-        let current_time_frame = 'short_term'; // Default to short_term
-        let current_time_frame_label = 'Last 4 weeks'; // Default label
+        const artistToggle = document.getElementById('toggle-artists');
+        const songToggle = document.getElementById('toggle-songs');
+        let currentType = 'artists';
 
-
-        timeFrameButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const dataFrame = button.dataset.frame;
-                current_time_frame = dataFrame;
-                if (dataFrame === 'short') {
-                    current_time_frame_label = 'Last 4 weeks';
-                } else if (dataFrame === 'medium') {
-                    current_time_frame_label = 'Last 6 months';
-                } else if (dataFrame === 'long') {
-                    current_time_frame_label = 'Last 1 year';
-                }
-                timeFrameContents.forEach(content => {
-                 if (content.dataset.frame === dataFrame) {
+        function updateContentDisplay(frame) {
+            document.querySelectorAll('.time-frame-content').forEach(content => {
+                if (content.dataset.frame === frame && content.classList.contains(currentType === 'artists' ? 'top-artists' : 'top-songs')) {
                     content.style.display = 'block';
                 } else {
                     content.style.display = 'none';
                 }
-                });
+            });
+        }
+
+        timeFrameButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                timeFrameButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const dataFrame = button.dataset.frame;
+                updateContentDisplay(dataFrame);
             });
         });
+
+        artistToggle.addEventListener('click', () => {
+            currentType = 'artists';
+            artistToggle.classList.add('active');
+            songToggle.classList.remove('active');
+            const activeFrame = document.querySelector('.time-frame-button.active')?.dataset.frame || 'short';
+            updateContentDisplay(activeFrame);
+        });
+
+        songToggle.addEventListener('click', () => {
+            currentType = 'songs';
+            songToggle.classList.add('active');
+            artistToggle.classList.remove('active');
+            const activeFrame = document.querySelector('.time-frame-button.active')?.dataset.frame || 'short';
+            updateContentDisplay(activeFrame);
+        });
+
+        // Set default active button and content
+        timeFrameButtons[0].classList.add('active');
+        updateContentDisplay('short');
     </script>
 </body>
+</html>
